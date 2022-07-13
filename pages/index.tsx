@@ -1,10 +1,9 @@
 import type { NextProtectedPage } from 'types'
 
-import { Routes } from 'core/config'
-import { AuthContext } from 'core/context/Auth'
+import { AppRoutes } from 'core/client'
+import { AuthContext } from 'context/Auth'
 import { useContext } from 'react'
-
-import Link from 'next/link'
+import { Link } from 'core/lib'
 
 const Home: NextProtectedPage = ({ user }) => {
   const { logout } = useContext(AuthContext)
@@ -14,7 +13,7 @@ const Home: NextProtectedPage = ({ user }) => {
       <div>
         Halo {user.email}!
         <p>
-          <Link href={Routes.masuk}>Masuk</Link>
+          <Link href={AppRoutes.masuk}>Masuk</Link>
         </p>
         <p>
           <button onClick={logout}>Logout</button>
@@ -27,7 +26,7 @@ const Home: NextProtectedPage = ({ user }) => {
     <div>
       You`re not logged in
       <p>
-        <Link href={Routes.masuk}>Masuk</Link>
+        <Link href={AppRoutes.masuk}>Masuk</Link>
       </p>
     </div>
   )

@@ -1,4 +1,5 @@
 {
+  "typescript.preferences.importModuleSpecifier": "shortest",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,

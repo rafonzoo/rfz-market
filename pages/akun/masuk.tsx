@@ -1,23 +1,22 @@
 import type { NextPage } from 'next'
 
-import { AuthContext } from 'core/context/Auth'
-import { getRedirectResult, GoogleAuthProvider } from 'firebase/auth'
-import { useContext, useEffect } from 'react'
-import { firebaseAuth } from 'core/firebase'
-import { Appkey } from 'core/config'
+import { AuthContext } from 'context/Auth'
+import { GoogleAuthProvider } from 'firebase/auth'
+import { useContext } from 'react'
+import { firebaseAuth } from 'core/client/app'
+import { Appkey } from 'core/client'
+import { useMounted, useRedux } from 'helpers/hook'
+import { getRedirectResultAction } from 'store/auth/action'
 
 const Masuk: NextPage = () => {
   const { signInWithProvider } = useContext(AuthContext)
+  const [, dispatch] = useRedux((state) => state)
 
-  useEffect(() => {
+  useMounted(() => {
     if (localStorage.getItem(Appkey.tokenStates)) {
-      getRedirectResult(firebaseAuth)
-        .then((user) => user && location.reload())
-        .catch(() => /* Toast error*/ void 0)
-
-      localStorage.removeItem(Appkey.tokenStates)
+      dispatch(getRedirectResultAction(firebaseAuth))
     }
-  }, [])
+  })
 
   return (
     <button onClick={() => signInWithProvider(new GoogleAuthProvider())}>
