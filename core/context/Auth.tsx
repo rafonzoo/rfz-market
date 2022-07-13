@@ -2,7 +2,7 @@ import type { AuthProvider, User } from 'firebase/auth'
 import type { ReactNode } from 'react'
 
 import { firebaseAuth } from 'core/firebase'
-import { onAuthStateChanged, onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
+import { onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
 import { createContext, useEffect, useState } from 'react'
 import { Appkey, isProtected } from 'core/config'
 import { removeDocumentCookie, setDocumentCookie } from 'core/config/helpers'
@@ -54,16 +54,10 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     const isStateLoggingIn = localStorage.getItem(Appkey.tokenStates)
-
-    onAuthStateChanged(firebaseAuth, () => {
-      if (isStateLoggingIn) {
-        localStorage.removeItem(Appkey.tokenStates)
-        location.reload()
-      }
-    })
+    const isAuthenticated = user && !isStateLoggingIn
 
     if (isProtected(router.asPath)) {
-      user && !isStateLoggingIn && router.replace('/')
+      isAuthenticated && router.replace('/')
     }
   }, [router, user])
 
