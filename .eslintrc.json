@@ -1,3 +1,38 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
+  "plugins": ["@typescript-eslint", "unused-imports"],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "max-len": ["error", { "code": 100 }],
+    "jsx-quotes": ["error", "prefer-single"],
+    "react/prop-types": "off",
+
+    "@typescript-eslint/no-unused-vars": ["warn", { "vars": "local" }],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
+    "import/order": [
+      "warn",
+      {
+        "groups": ["type", ["external", "internal"]],
+        "pathGroupsExcludedImportTypes": ["next/**"],
+        "pathGroups": [
+          {
+            "pattern": "@/components/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "next/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "newlines-between": "always",
+        "warnOnUnassignedImports": false
+      }
+    ]
+  }
 }
