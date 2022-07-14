@@ -1,7 +1,7 @@
 import type { NextRequest } from 'types'
 
-import { firebaseAdmin } from 'core/server/admin'
-import { Appkey, AppRoutes } from 'core/client'
+import { firebaseAdmin } from 'core/firebase/admin'
+import { Appkey, AppRoutes } from 'core/config'
 import { serialize } from 'cookie'
 
 export interface VerifyResponse {

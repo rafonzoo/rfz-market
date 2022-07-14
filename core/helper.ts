@@ -1,4 +1,4 @@
-import { AppRoutes } from 'core/client'
+import { AppRoutes } from 'core/config'
 
 export const isProtectedPage = (string: string) => {
   const protectedRoutes = [AppRoutes.masuk, AppRoutes.daftar]

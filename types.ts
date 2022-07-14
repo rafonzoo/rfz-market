@@ -11,11 +11,3 @@ export type NextRequest<T = unknown> = (
   req: NextApiRequest,
   res: NextApiResponse<T>
 ) => void
-
-// interface ResponseBase {
-//   status: number
-// }
-
-// interface ResponseError extends ResponseBase {
-//   error?: Error
-// }
