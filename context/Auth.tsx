@@ -4,14 +4,14 @@ import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { onIdTokenChanged } from 'firebase/auth'
 import { useState } from 'react'
-import { firebaseAuth } from 'core/client/app'
+import { firebaseAuth } from 'core/firebase'
 import { signInWithRedirect } from 'firebase/auth'
 import { createContext, useEffect } from 'react'
-import { Appkey } from 'core/client'
+import { Appkey } from 'core/config'
 import { signoutUserAction, verifyUserTokenAction } from 'store/auth/action'
-import { useRedux } from 'helpers/hook'
+import { useRedux } from 'tools/hook'
 import { useRouter } from 'next/router'
-import { isProtectedPage } from 'helpers/common'
+import { isProtectedPage } from 'core/helper'
 
 export const AuthContext = createContext<{
   mounted: boolean
@@ -44,8 +44,8 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
   useEffect(() => isMounted(true), [])
   useEffect(() => {
     onIdTokenChanged(firebaseAuth, async (profile) => {
-      if (!isStateLoggingIn) {
-        mounted && dispatch(verifyUserTokenAction(profile))
+      if (!isStateLoggingIn && mounted) {
+        dispatch(verifyUserTokenAction(profile))
       }
     })
   }, [dispatch, isStateLoggingIn, mounted])

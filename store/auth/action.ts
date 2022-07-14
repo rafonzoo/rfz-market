@@ -3,15 +3,15 @@ import type { VerifyResponse } from 'pages/api/auth/verify'
 
 import { getRedirectResult } from 'firebase/auth'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Appkey, AppRequest } from 'core/client'
-import { axios } from 'core/lib'
-import { firebaseAuth } from 'core/client/app'
+import { Appkey, AppRoutesApi } from 'core/config'
+import { axios } from 'core/import'
+import { firebaseAuth } from 'core/firebase'
 
 export const verifyUserTokenAction = createAsyncThunk(
   'auth/verifyUserTokenAction',
   async (user: User | null) => {
     if (user) {
-      const { postVerifyUser: verifyUser } = AppRequest
+      const { postVerifyUser: verifyUser } = AppRoutesApi
       const { data } = await axios.post<VerifyResponse>(verifyUser, {
         token: await user.getIdToken(),
       })
@@ -29,7 +29,7 @@ export const getRedirectResultAction = createAsyncThunk(
     const credential = await getRedirectResult(auth)
 
     if (credential && credential.user) {
-      const { postVerifyUser: verifyUser } = AppRequest
+      const { postVerifyUser: verifyUser } = AppRoutesApi
       const token = await credential.user.getIdToken()
 
       await axios.post<VerifyResponse>(verifyUser, { token })
@@ -44,7 +44,7 @@ export const getRedirectResultAction = createAsyncThunk(
 
 export const signoutUserAction = createAsyncThunk('auth/signoutUserAction', async () => {
   await firebaseAuth.signOut()
-  await axios.post(AppRequest.postUserSignout)
+  await axios.post(AppRoutesApi.postUserSignout)
 
   location.reload()
   return null

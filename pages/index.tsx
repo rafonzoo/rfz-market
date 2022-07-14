@@ -1,9 +1,9 @@
 import type { NextProtectedPage } from 'types'
 
-import { AppRoutes } from 'core/client'
+import { AppRoutes } from 'core/config'
 import { AuthContext } from 'context/Auth'
 import { useContext } from 'react'
-import { Link } from 'core/lib'
+import { Link } from 'core/import'
 
 const Home: NextProtectedPage = ({ user }) => {
   const { logout } = useContext(AuthContext)

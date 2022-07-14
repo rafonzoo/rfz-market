@@ -1,6 +1,6 @@
 import type { NextRequest } from 'types'
 
-import { Appkey, AppRoutes } from 'core/client'
+import { Appkey, AppRoutes } from 'core/config'
 import { serialize } from 'cookie'
 
 const requestPostLogout: NextRequest = async (req, res) => {

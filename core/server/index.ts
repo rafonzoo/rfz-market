@@ -2,9 +2,9 @@ import type { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier'
 import type { GetServerSideProps } from 'next'
 
 import { serialize } from 'cookie'
-import { Appkey, AppRoutes } from 'core/client'
-import { firebaseAdmin } from 'core/server/admin'
-import { isProtectedPage } from 'helpers/common'
+import { Appkey, AppRoutes } from 'core/config'
+import { firebaseAdmin } from 'core/firebase/admin'
+import { isProtectedPage } from 'core/helper'
 
 export const ProtectedPage: GetServerSideProps = async (ctx) => {
   const admin = firebaseAdmin()

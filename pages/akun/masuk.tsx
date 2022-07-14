@@ -3,9 +3,9 @@ import type { NextPage } from 'next'
 import { AuthContext } from 'context/Auth'
 import { GoogleAuthProvider } from 'firebase/auth'
 import { useContext } from 'react'
-import { firebaseAuth } from 'core/client/app'
-import { Appkey } from 'core/client'
-import { useMounted, useRedux } from 'helpers/hook'
+import { firebaseAuth } from 'core/firebase'
+import { Appkey } from 'core/config'
+import { useMounted, useRedux } from 'tools/hook'
 import { getRedirectResultAction } from 'store/auth/action'
 
 const Masuk: NextPage = () => {
