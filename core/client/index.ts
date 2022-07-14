@@ -1,4 +1,4 @@
-export enum Routes {
+export enum AppRoutes {
   beranda = '/',
   akun = '/akun',
   masuk = '/akun/masuk',
@@ -10,7 +10,7 @@ export enum Appkey {
   tokenStates = 'X-SSID-STATE',
 }
 
-export const isProtected = (string: string) => {
-  const protectedRoutes = [Routes.masuk, Routes.daftar]
-  return protectedRoutes.includes(string as Routes)
+export enum AppRequest {
+  postVerifyUser = '/api/auth/verify',
+  postUserSignout = '/api/auth/logout',
 }

@@ -2,8 +2,9 @@ import type { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier'
 import type { GetServerSideProps } from 'next'
 
 import { serialize } from 'cookie'
-import { Appkey, isProtected, Routes } from 'core/config'
-import { firebaseAdmin } from 'core/firebase/admin'
+import { Appkey, AppRoutes } from 'core/client'
+import { firebaseAdmin } from 'core/server/admin'
+import { isProtectedPage } from 'helpers/common'
 
 export const ProtectedPage: GetServerSideProps = async (ctx) => {
   const admin = firebaseAdmin()
@@ -14,20 +15,21 @@ export const ProtectedPage: GetServerSideProps = async (ctx) => {
 
   if (token) {
     try {
-      if (!isProtected(ctx.resolvedUrl)) {
+      if (!isProtectedPage(ctx.resolvedUrl)) {
         // Generate decodedId only if the routes is not authenticating page
         // instead generate user for pages that will be redirect.
         props = { user: await admin.auth().verifyIdToken(token) }
       } else {
-        redirect = { destination: Routes.beranda }
+        redirect = { destination: AppRoutes.beranda }
       }
     } catch (error) {
+      const protectedRoute = isProtectedPage(ctx.resolvedUrl)
       // Token has problem. If current page is authenticated page,
       // redirect them to signin page and remove the broken token.
-      redirect = isProtected(ctx.resolvedUrl) ? { destination: Routes.masuk } : false
+      redirect = protectedRoute ? { destination: AppRoutes.masuk } : false
       ctx.res.setHeader(
         'Set-Cookie',
-        serialize(Appkey.tokenCookie, '', { path: Routes.beranda, maxAge: 0 })
+        serialize(Appkey.tokenCookie, '', { path: AppRoutes.beranda, maxAge: 0 })
       )
     }
 
