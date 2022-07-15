@@ -25,5 +25,5 @@ const Masuk: NextPage = () => {
   )
 }
 
-export { ProtectedPage as getServerSideProps } from 'core/server'
+export { ProtectedPage as getServerSideProps } from 'core/server/redirect'
 export default Masuk
