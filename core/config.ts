@@ -6,13 +6,14 @@ export enum AppRoutes {
 }
 
 export enum AppRoutesApi {
-  postVerifyUser = '/api/auth/verify',
-  postUserSignout = '/api/auth/logout',
+  userVerify = '/api/auth/user/verify',
+  userLogout = '/api/auth/user/logout',
 }
 
 export enum Appkey {
-  tokenCookie = 'X-SSID-TOKEN',
-  tokenStates = 'X-SSID-STATE',
+  AC_SSID_CLIENT = 'AC-SSID-CLIENT',
+  AC_SSID_SECURE = 'AC-SSID-SECURE',
+  AL_SSID_ONLOAD = 'AL-SSID-ONLOAD',
 }
 
 export enum AppRequestStatus {

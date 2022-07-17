@@ -1,17 +1,19 @@
 import type { AuthProvider } from 'firebase/auth'
 import type { ReactNode } from 'react'
 
-import { useMemo } from 'react'
-import { onIdTokenChanged } from 'firebase/auth'
-import { useState } from 'react'
+import { useEffect, createContext, useMemo, useState } from 'react'
+import { onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
 import { firebaseAuth } from 'core/firebase'
-import { signInWithRedirect } from 'firebase/auth'
-import { createContext, useEffect } from 'react'
 import { Appkey } from 'core/config'
-import { signoutUserAction, verifyUserTokenAction } from 'store/auth/action'
+import {
+  signoutAuthUserAction,
+  unauthorizedTokenAction,
+  verifyUserTokenAction,
+} from 'store/auth/action'
 import { useRedux } from 'tools/hook'
 import { useRouter } from 'next/router'
 import { isProtectedPage } from 'core/helper'
+import { parse } from 'cookie'
 
 export const AuthContext = createContext<{
   mounted: boolean
@@ -26,26 +28,31 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
   const router = useRouter()
   const isStateLoggingIn = useMemo(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem(Appkey.tokenStates)
+      return localStorage.getItem(Appkey.AL_SSID_ONLOAD)
     }
 
     return null
   }, [])
 
   const signInWithProvider = async (provider: AuthProvider) => {
-    localStorage.setItem(Appkey.tokenStates, 'true')
+    localStorage.setItem(Appkey.AL_SSID_ONLOAD, 'true')
     await signInWithRedirect(firebaseAuth, provider)
   }
 
   const logout = () => {
-    dispatch(signoutUserAction())
+    dispatch(signoutAuthUserAction())
   }
 
   useEffect(() => isMounted(true), [])
   useEffect(() => {
-    onIdTokenChanged(firebaseAuth, async (profile) => {
-      if (!isStateLoggingIn && mounted) {
+    // prettier-ignore
+    mounted && onIdTokenChanged(firebaseAuth, async (profile) => {
+      if (!isStateLoggingIn && profile) {
         dispatch(verifyUserTokenAction(profile))
+      }
+
+      if (parse(document.cookie)[Appkey.AC_SSID_CLIENT]) {
+        !profile && dispatch(unauthorizedTokenAction())
       }
     })
   }, [dispatch, isStateLoggingIn, mounted])

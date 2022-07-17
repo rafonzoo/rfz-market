@@ -1,35 +1,43 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { FetchRequest } from 'types'
 
 import { AppRequestStatus } from 'core/config'
 
-type RequestCallback<P> = (req: NextApiRequest, res: NextApiResponse) => Promise<P>
-// type WithRequestParam<C> = (
-//   result: WithRequestCallback<C>,
-//   method: string[]
-// ) => WithRequestCallback<C>
+type CallbackFn<P = {}> = (args: CallbackProps) => Promise<P | void | undefined> | never
 
-export const withRequest = <T = {}>(callbackFn: RequestCallback<T>, method: string[]) => {
-  return async (req: NextApiRequest, res: NextApiResponse<T>) => {
+type CallbackProps = {
+  request: NextApiRequest
+  response: NextApiResponse
+  throwError: (key: keyof typeof AppRequestStatus) => never
+}
+
+// prettier-ignore
+// eslint-disable-next-line max-len
+export const withRequest = <T extends FetchRequest>(cb: CallbackFn<T['response']>, methods: string[]) => {
+  return async (req: NextApiRequest, res: NextApiResponse<T['response'] | undefined>) => {
     const { InternalServerError, MethodNotAllowed, OK } = AppRequestStatus
 
-    if (!method.includes(req.body)) {
-      return res.status(MethodNotAllowed).send(null)
+    const throwError: CallbackProps['throwError'] = (key) => {
+      throw AppRequestStatus[key]
+    }
+
+    if (!req.method || methods.length === 0) {
+      return res.status(InternalServerError).json(undefined)
+    }
+
+    const toLowerMethod = methods
+      .map((method) => method.toLowerCase())
+      .includes(req.method.toLowerCase())
+
+    if (!toLowerMethod) {
+      return res.status(MethodNotAllowed).json(undefined)
     }
 
     try {
-      const data = await callbackFn(req, res)
-      const response = res.status(OK)
-
-      return response.json(data)
+      const data = await cb({ request: req, response: res, throwError })
+      return res.status(OK).json(data instanceof Object ? data : undefined)
     } catch (e) {
-      const isThrowed = typeof e === 'number'
-      const error = e as AppRequestStatus
-
-      if (isThrowed /* Throw from the callback */) {
-        return res.status(error).send(null)
-      }
+      return res.status(e as AppRequestStatus).json(undefined)
     }
-
-    return res.status(InternalServerError).send(null)
   }
 }

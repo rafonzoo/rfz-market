@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && yarn tsc",
-    "lint:fix": "yarn lint:prettier && yarn lint:eslint",
+    "lint:fix": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "npx eslint -c ./.eslintrc.json **/*.{ts,tsx} --fix",
     "lint:prettier": "npx prettier **/*.{ts,tsx} --write --config ./.prettierrc.json"
   },

@@ -1,16 +1,14 @@
 import type { User } from 'firebase/auth'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import type { AuthData } from 'store/auth/types'
 
 import { createSlice } from '@reduxjs/toolkit'
 import {
   getRedirectResultAction,
-  signoutUserAction,
+  signoutAuthUserAction,
+  unauthorizedTokenAction,
   verifyUserTokenAction,
 } from 'store/auth/action'
-
-interface AuthData {
-  user: User | null
-}
 
 const initialState: AuthData = {
   user: null,
@@ -25,9 +23,10 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(verifyUserTokenAction.fulfilled, successAction)
+    builder.addCase(unauthorizedTokenAction.fulfilled, successAction)
     builder.addCase(getRedirectResultAction.fulfilled, successAction)
-    builder.addCase(signoutUserAction.fulfilled, successAction)
+    builder.addCase(verifyUserTokenAction.fulfilled, successAction)
+    builder.addCase(signoutAuthUserAction.fulfilled, successAction)
   },
 })
 

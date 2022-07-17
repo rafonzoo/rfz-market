@@ -18,6 +18,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
+    "import/no-duplicates": ["error"],
     "import/order": [
       "warn",
       {

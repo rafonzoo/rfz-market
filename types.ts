@@ -7,7 +7,13 @@ export type BaseResponse<R = {}> = {
 }
 
 export type NextProtectedPage<T = {}> = NextPage<{ user: DecodedIdToken | null } & T>
+
 export type NextRequest<T = unknown> = (
   req: NextApiRequest,
   res: NextApiResponse<T>
 ) => void
+
+export interface FetchRequest<C = {}, M = {}> {
+  response: C
+  payload: M
+}
