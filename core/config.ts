@@ -6,11 +6,28 @@ export enum AppRoutes {
 }
 
 export enum AppRoutesApi {
-  postVerifyUser = '/api/auth/verify',
-  postUserSignout = '/api/auth/logout',
+  userVerify = '/api/auth/user/verify',
+  userLogout = '/api/auth/user/logout',
 }
 
 export enum Appkey {
-  tokenCookie = 'X-SSID-TOKEN',
-  tokenStates = 'X-SSID-STATE',
+  AC_SSID_CLIENT = 'AC-SSID-CLIENT',
+  AC_SSID_SECURE = 'AC-SSID-SECURE',
+  AL_SSID_ONLOAD = 'AL-SSID-ONLOAD',
+}
+
+export enum AppRequestStatus {
+  OK = 200,
+  BadRequest = 400,
+  Unauthorized = 401,
+  PaymentRequired = 402,
+  Forbidden = 403,
+  NotFound = 404,
+  MethodNotAllowed = 405,
+  InternalServerError = 500,
+  NotImplemented = 501,
+  BadGateway = 502,
+  ServiceUnavailable = 503,
+  GatewayTimeout = 504,
+  HTTPVersionNotSupported = 505,
 }

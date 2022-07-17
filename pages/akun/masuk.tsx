@@ -13,7 +13,7 @@ const Masuk: NextPage = () => {
   const [, dispatch] = useRedux((state) => state)
 
   useMounted(() => {
-    if (localStorage.getItem(Appkey.tokenStates)) {
+    if (localStorage.getItem(Appkey.AL_SSID_ONLOAD)) {
       dispatch(getRedirectResultAction(firebaseAuth))
     }
   })
@@ -25,5 +25,5 @@ const Masuk: NextPage = () => {
   )
 }
 
-export { ProtectedPage as getServerSideProps } from 'core/server'
+export { ProtectedPage as getServerSideProps } from 'core/server/redirect'
 export default Masuk

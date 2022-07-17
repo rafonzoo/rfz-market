@@ -32,5 +32,5 @@ const Home: NextProtectedPage = ({ user }) => {
   )
 }
 
-export { ProtectedPage as getServerSideProps } from 'core/server'
+export { ProtectedPage as getServerSideProps } from 'core/server/redirect'
 export default Home

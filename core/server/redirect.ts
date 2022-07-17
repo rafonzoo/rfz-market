@@ -8,7 +8,7 @@ import { isProtectedPage } from 'core/helper'
 
 export const ProtectedPage: GetServerSideProps = async (ctx) => {
   const admin = firebaseAdmin()
-  const token = ctx.req.cookies[Appkey.tokenCookie]
+  const token = ctx.req.cookies[Appkey.AC_SSID_SECURE]
 
   let props: { user: DecodedIdToken | null } = { user: null }
   let redirect: boolean | object = false
@@ -29,7 +29,7 @@ export const ProtectedPage: GetServerSideProps = async (ctx) => {
       redirect = protectedRoute ? { destination: AppRoutes.masuk } : false
       ctx.res.setHeader(
         'Set-Cookie',
-        serialize(Appkey.tokenCookie, '', { path: AppRoutes.beranda, maxAge: 0 })
+        serialize(Appkey.AC_SSID_SECURE, '', { path: AppRoutes.beranda, maxAge: 0 })
       )
     }
 
