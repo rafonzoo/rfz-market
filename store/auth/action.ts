@@ -1,11 +1,23 @@
 import type { Auth, User } from 'firebase/auth'
 import type { VerifyUser } from 'store/auth/types'
+import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
 
 import { getRedirectResult } from 'firebase/auth'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Appkey, AppRoutesApi } from 'core/config'
 import { firebaseAuth } from 'core/firebase'
 import { dofetch, devlog } from 'core/helper'
+
+const setUserInfo = (user: User) => {
+  return {
+    displayName: user.displayName,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+    photoURL: user.photoURL,
+    providerId: user.providerId,
+    uid: user.uid,
+  } as UserInfo
+}
 
 export const unauthorizedTokenAction = createAsyncThunk(
   'auth/unauthorizedTokenAction',
@@ -36,7 +48,7 @@ export const verifyUserTokenAction = createAsyncThunk(
         },
       })
 
-      return data.isVerified ? user : null
+      return data.isVerified ? setUserInfo(user) : null
     } catch (error) {
       devlog(error, 'error')
     }
@@ -61,7 +73,7 @@ export const getRedirectResultAction = createAsyncThunk(
           },
         })
 
-        account = data.isVerified ? user : null
+        account = data.isVerified ? setUserInfo(user) : null
       }
     } catch (error) {
       devlog(error, 'error')

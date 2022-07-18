@@ -46,13 +46,13 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
   useEffect(() => isMounted(true), [])
   useEffect(() => {
     // prettier-ignore
-    mounted && onIdTokenChanged(firebaseAuth, async (profile) => {
-      if (!isStateLoggingIn && profile) {
-        dispatch(verifyUserTokenAction(profile))
+    mounted && onIdTokenChanged(firebaseAuth, async (user) => {
+      if (!isStateLoggingIn && user) {
+        dispatch(verifyUserTokenAction(user))
       }
 
       if (parse(document.cookie)[Appkey.AC_SSID_CLIENT]) {
-        !profile && dispatch(unauthorizedTokenAction())
+        !user && dispatch(unauthorizedTokenAction())
       }
     })
   }, [dispatch, isStateLoggingIn, mounted])
