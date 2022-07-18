@@ -2,21 +2,21 @@ import type { NextPage } from 'next'
 
 import { AuthContext } from 'context/Auth'
 import { GoogleAuthProvider } from 'firebase/auth'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { firebaseAuth } from 'core/firebase'
 import { Appkey } from 'core/config'
-import { useMounted, useRedux } from 'tools/hook'
+import { useRedux } from 'tools/hook'
 import { getRedirectResultAction } from 'store/auth/action'
 
 const Masuk: NextPage = () => {
-  const { signInWithProvider } = useContext(AuthContext)
+  const { mounted, signInWithProvider } = useContext(AuthContext)
   const [, dispatch] = useRedux((state) => state)
 
-  useMounted(() => {
-    if (localStorage.getItem(Appkey.AL_SSID_ONLOAD)) {
+  useEffect(() => {
+    if (mounted && localStorage.getItem(Appkey.AL_SSID_ONLOAD)) {
       dispatch(getRedirectResultAction(firebaseAuth))
     }
-  })
+  }, [dispatch, mounted])
 
   return (
     <button onClick={() => signInWithProvider(new GoogleAuthProvider())}>
