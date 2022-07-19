@@ -9,7 +9,8 @@
     "lint": "next lint && yarn tsc",
     "lint:eslint": "npx eslint -c ./.eslintrc.json **/*.{ts,tsx} --fix",
     "lint:prettier": "npx prettier **/*.{ts,tsx} --write --config ./.prettierrc.json",
-    "pre-commit": "yarn lint:eslint && yarn lint:prettier"
+    "pre-commit": "yarn lint:eslint && yarn lint:prettier",
+    "git-clean": "cd main && git fetch -p && git pull origin main && git branch -vv | grep ': gone]' | awk '{ print $1; }' | xargs -r git branch -d"
   },
   "lint-staged": {
     "*.{ts,tsx}": "yarn pre-commit"

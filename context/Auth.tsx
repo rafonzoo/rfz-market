@@ -41,12 +41,10 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
       const isStateLoggingIn = localStorage.getItem(Appkey.AL_SSID_ONLOAD)
       const clientUserCookie = parse(document.cookie)[Appkey.AC_SSID_CLIENT]
 
-      if (!isStateLoggingIn && user) {
-        dispatch(verifyUserTokenAction(user))
-      }
-
-      if (!user && clientUserCookie) {
-        dispatch(unauthorizedTokenAction())
+      if (clientUserCookie && !isStateLoggingIn) {
+        user
+          ? dispatch(verifyUserTokenAction(user))
+          : dispatch(unauthorizedTokenAction())
       }
     })
   }, [dispatch, mounted])
