@@ -1,3 +1,5 @@
+[![App Package CI](https://github.com/rafonzoo/rfz-market/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/rafonzoo/rfz-market/actions/workflows/main.yml)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
