@@ -28,11 +28,6 @@ export const devlog = (message: unknown, key?: keyof typeof colorType) => {
   return isClientDev && console.log('%cDEV', style, message)
 }
 
-export const isProtectedPage = (string: string) => {
-  const protectedRoutes = [AppRoutes.masuk, AppRoutes.daftar]
-  return protectedRoutes.includes(string as AppRoutes)
-}
-
 export const dofetch = async <P extends FetchRequest>(
   option: AxiosRequestConfig<P['payload']>
 ) => {
@@ -41,4 +36,9 @@ export const dofetch = async <P extends FetchRequest>(
     method: option.method ?? 'GET',
   }
   return (await axios(defaultConfig)) as AxiosResponse<P['response']>
+}
+
+export const isProtectedPage = (string: string) => {
+  const protectedRoutes = [AppRoutes.masuk, AppRoutes.daftar]
+  return protectedRoutes.includes(string as AppRoutes)
 }
