@@ -22,4 +22,4 @@ jobs:
       - name: Type Checking
         run: yarn tsc
       - name: Production Build
-        run: yarn run build
+        run: yarn build
