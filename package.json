@@ -10,7 +10,7 @@
     "lint:eslint": "npx eslint -c ./.eslintrc.json **/*.{ts,tsx} --fix",
     "lint:prettier": "npx prettier **/*.{ts,tsx} --write --config ./.prettierrc.json",
     "pre-commit": "yarn lint:eslint && yarn lint:prettier",
-    "prune-gone": "git checkout main && git gone -pn && git gone -d"
+    "prune-gone": "git checkout main && git pull origin main && git gone -pn && git gone -d"
   },
   "lint-staged": {
     "*.{ts,tsx}": "yarn pre-commit"
