@@ -25,4 +25,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Type Checking
-      - run: yarn run tsc
+        run: yarn tsc
