@@ -1,19 +1,19 @@
 import type { AuthProvider } from 'firebase/auth'
 import type { ReactNode } from 'react'
 
-import { useEffect, createContext, useMemo, useState } from 'react'
-import { onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
-import { firebaseAuth } from 'core/firebase'
+import { parse } from 'cookie'
 import { Appkey } from 'core/config'
+import { firebaseAuth } from 'core/firebase'
+import { isProtectedPage } from 'core/helper'
+import { router } from 'core/import'
+import { onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
+import { useEffect, createContext, useState } from 'react'
 import {
   signoutAuthUserAction,
   unauthorizedTokenAction,
   verifyUserTokenAction,
 } from 'store/auth/action'
 import { useRedux } from 'tools/hook'
-import { useRouter } from 'next/router'
-import { isProtectedPage } from 'core/helper'
-import { parse } from 'cookie'
 
 export const AuthContext = createContext<{
   mounted: boolean
@@ -24,15 +24,6 @@ export const AuthContext = createContext<{
 export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
   const [{ user }, dispatch] = useRedux((state) => state.auth)
   const [mounted, isMounted] = useState(false)
-
-  const router = useRouter()
-  const isStateLoggingIn = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem(Appkey.AL_SSID_ONLOAD)
-    }
-
-    return null
-  }, [])
 
   const signInWithProvider = async (provider: AuthProvider) => {
     localStorage.setItem(Appkey.AL_SSID_ONLOAD, 'true')
@@ -47,21 +38,25 @@ export const ProviderAuth = ({ children }: { children?: ReactNode }) => {
   useEffect(() => {
     // prettier-ignore
     mounted && onIdTokenChanged(firebaseAuth, async (user) => {
+      const isStateLoggingIn = localStorage.getItem(Appkey.AL_SSID_ONLOAD)
+      const clientUserCookie = parse(document.cookie)[Appkey.AC_SSID_CLIENT]
+
       if (!isStateLoggingIn && user) {
         dispatch(verifyUserTokenAction(user))
       }
 
-      if (parse(document.cookie)[Appkey.AC_SSID_CLIENT]) {
-        !user && dispatch(unauthorizedTokenAction())
+      if (!user && clientUserCookie) {
+        dispatch(unauthorizedTokenAction())
       }
     })
-  }, [dispatch, isStateLoggingIn, mounted])
+  }, [dispatch, mounted])
 
   useEffect(() => {
+    const isStateLoggingIn = localStorage.getItem(Appkey.AL_SSID_ONLOAD)
     if (user && isProtectedPage(router.asPath)) {
       !isStateLoggingIn && router.replace('/')
     }
-  }, [isStateLoggingIn, router, user])
+  }, [user])
 
   return (
     <AuthContext.Provider value={{ mounted, signInWithProvider, logout }}>

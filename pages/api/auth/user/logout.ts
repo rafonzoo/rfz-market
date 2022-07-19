@@ -1,5 +1,5 @@
-import { Appkey, AppRoutes } from 'core/config'
 import { serialize } from 'cookie'
+import { Appkey, AppRoutes } from 'core/config'
 import { withRequest } from 'core/server/request'
 
 const userLogoutRequest = withRequest(

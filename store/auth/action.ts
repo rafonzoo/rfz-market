@@ -1,12 +1,12 @@
+import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
 import type { Auth, User } from 'firebase/auth'
 import type { VerifyUser } from 'store/auth/types'
-import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
 
-import { getRedirectResult } from 'firebase/auth'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Appkey, AppRoutesApi } from 'core/config'
 import { firebaseAuth } from 'core/firebase'
 import { dofetch, devlog } from 'core/helper'
+import { getRedirectResult } from 'firebase/auth'
 
 const setUserInfo = (user: User) => {
   return {

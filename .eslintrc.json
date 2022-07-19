@@ -9,7 +9,6 @@
   "rules": {
     "semi": ["error", "never"],
     "quotes": ["error", "single"],
-    "max-len": ["error", { "code": 90 }],
     "jsx-quotes": ["error", "prefer-single"],
     "react/prop-types": "off",
     "unused-imports/no-unused-imports": ["warn", { "vars": "local" }],
@@ -24,7 +23,10 @@
       {
         "groups": ["type", ["external", "internal"]],
         "newlines-between": "always",
-        "warnOnUnassignedImports": false
+        "warnOnUnassignedImports": false,
+        "alphabetize": {
+          "order": "asc"
+        }
       }
     ]
   }

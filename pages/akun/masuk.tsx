@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 
 import { AuthContext } from 'context/Auth'
+import { Appkey } from 'core/config'
+import { firebaseAuth } from 'core/firebase'
 import { GoogleAuthProvider } from 'firebase/auth'
 import { useContext, useEffect } from 'react'
-import { firebaseAuth } from 'core/firebase'
-import { Appkey } from 'core/config'
-import { useRedux } from 'tools/hook'
 import { getRedirectResultAction } from 'store/auth/action'
+import { useRedux } from 'tools/hook'
 
 const Masuk: NextPage = () => {
   const { mounted, signInWithProvider } = useContext(AuthContext)

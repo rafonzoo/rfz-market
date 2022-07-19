@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { AuthData } from 'store/auth/types'
 import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
+import type { AuthData } from 'store/auth/types'
 
 import { createSlice } from '@reduxjs/toolkit'
 import {
