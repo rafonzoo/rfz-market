@@ -27,10 +27,10 @@ export const ProtectedPage: GetServerSideProps = async (ctx) => {
       // Token has problem. If current page is authenticated page,
       // redirect them to signin page and remove the broken token.
       redirect = protectedRoute ? { destination: AppRoutes.masuk } : false
-      ctx.res.setHeader(
-        'Set-Cookie',
-        serialize(Appkey.AC_SSID_SECURE, '', { path: AppRoutes.beranda, maxAge: 0 })
-      )
+      ctx.res.setHeader('Set-Cookie', [
+        serialize(Appkey.AC_SSID_CLIENT, '', { path: AppRoutes.beranda, maxAge: 0 }),
+        serialize(Appkey.AC_SSID_SECURE, '', { path: AppRoutes.beranda, maxAge: 0 }),
+      ])
     }
 
     return { props, redirect }

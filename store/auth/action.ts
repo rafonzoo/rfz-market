@@ -28,7 +28,7 @@ export const unauthorizedTokenAction = createAsyncThunk(
         method: 'POST',
       })
 
-      setTimeout(() => location.reload(), 5000)
+      setTimeout(() => location.reload(), 500)
     } catch (error) {
       devlog(error, 'error')
     }
