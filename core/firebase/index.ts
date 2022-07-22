@@ -2,7 +2,7 @@ import type { FirebaseApp } from 'firebase/app'
 
 import { getApp, initializeApp } from 'firebase/app'
 import { getAuth, indexedDBLocalPersistence } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore/lite'
 
 export const firebaseApp = () => {
   let APP: FirebaseApp
