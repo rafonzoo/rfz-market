@@ -16,22 +16,9 @@
     "incremental": true,
     "baseUrl": "./src",
     "paths": {
-      "@core": ["core"],
-      "@core/*": ["core/*"],
-      "@pages": ["pages"],
-      "@pages/*": ["pages/*"],
-      "@store": ["store"],
-      "@store/*": ["store/*"],
-      "@tools": ["tools"],
-      "@tools/*": ["tools/*"],
-      "@context": ["context"],
-      "@context/*": ["context/*"],
-      "@components": ["components"],
-      "@components/*": ["components/*"],
-      "@server": ["core/server"],
-      "@server/*": ["core/server/*"],
-      "@type": ["types"],
-      "@type/*": ["types/*"]
+      "@*": ["*"],
+      "@type*": ["types*"],
+      "@server*": ["core/server*"]
     }
   },
   "include": ["global.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
