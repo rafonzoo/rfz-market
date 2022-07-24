@@ -5,7 +5,7 @@ import { ColorModeProvider } from '@context/Theme'
 import { router } from '@core'
 import { Appkey } from '@core/config'
 import { firebaseAuth } from '@core/firebase/client'
-import { default as GlobalStyles } from '@mui/material/GlobalStyles'
+import { GlobalStyles } from '@mui/material'
 import {
   signoutAuthUserAction,
   unauthorizedTokenAction,
