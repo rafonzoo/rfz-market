@@ -23,6 +23,14 @@
       {
         "groups": ["type", ["external", "internal"]],
         "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "@components/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["external"],
         "warnOnUnassignedImports": false,
         "alphabetize": {
           "order": "asc"
