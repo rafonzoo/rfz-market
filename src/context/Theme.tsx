@@ -1,9 +1,9 @@
 import type { Theme } from '@mui/material/styles'
 import type { ReactNode } from 'react'
 
-import { getThemeOption, getThemePalette } from '@core/config/theme'
+import { getThemeOption, getThemePalette } from '@core/app'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useMemo, useState, createContext } from 'react'
+import { createContext, useMemo, useState } from 'react'
 
 export const ColorModeContext = createContext<{
   theme: Theme
@@ -32,3 +32,5 @@ export const ColorModeProvider = ({ children }: { children?: ReactNode }) => {
     </ColorModeContext.Provider>
   )
 }
+
+export default ColorModeContext

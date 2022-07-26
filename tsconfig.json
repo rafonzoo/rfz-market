@@ -17,8 +17,8 @@
     "baseUrl": "./src",
     "paths": {
       "@*": ["*"],
-      "@type*": ["types*"],
-      "@server*": ["core/server*"]
+      "@type": ["types"],
+      "@type*": ["types*"]
     }
   },
   "include": ["global.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
