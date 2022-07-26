@@ -18,6 +18,16 @@
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
     "import/no-duplicates": ["error"],
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": false
+      }
+    ],
     "import/order": [
       "warn",
       {

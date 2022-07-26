@@ -2,10 +2,10 @@ import type { VerifyUser } from '@store/auth/types'
 import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
 import type { Auth, User } from 'firebase/auth'
 
+import { auth } from '@core/app'
 import { Appkey, AppRoutesApi } from '@core/config'
-import { firebaseAuth } from '@core/firebase/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { dofetch, devlog } from '@tools/helper'
+import { devlog, dofetch } from '@tools/helper'
 import { getRedirectResult } from 'firebase/auth'
 
 const setUserInfo = (user: User) => {
@@ -24,8 +24,8 @@ export const unauthorizedTokenAction = createAsyncThunk(
   async () => {
     try {
       await dofetch({
-        url: AppRoutesApi.userLogout,
         method: 'POST',
+        url: AppRoutesApi.userLogout,
       })
 
       setTimeout(() => location.reload(), 500)
@@ -41,11 +41,11 @@ export const verifyUserTokenAction = createAsyncThunk(
   async (user: User) => {
     try {
       const { data } = await dofetch<VerifyUser>({
-        url: AppRoutesApi.userVerify,
-        method: 'POST',
         data: {
           token: await user.getIdToken(),
         },
+        method: 'POST',
+        url: AppRoutesApi.userVerify,
       })
 
       return data.isVerified ? setUserInfo(user) : null
@@ -66,11 +66,11 @@ export const getRedirectResultAction = createAsyncThunk(
 
       if (user) {
         const { data } = await dofetch<VerifyUser>({
-          url: AppRoutesApi.userVerify,
-          method: 'POST',
           data: {
             token: await user.getIdToken(),
           },
+          method: 'POST',
+          url: AppRoutesApi.userVerify,
         })
 
         account = data.isVerified ? setUserInfo(user) : null
@@ -90,10 +90,10 @@ export const signoutAuthUserAction = createAsyncThunk(
   'auth/signoutUserAction',
   async () => {
     try {
-      await firebaseAuth.signOut()
+      await auth.signOut()
       await dofetch({
-        url: AppRoutesApi.userLogout,
         method: 'POST',
+        url: AppRoutesApi.userLogout,
       })
 
       location.reload()

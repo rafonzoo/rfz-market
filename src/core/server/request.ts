@@ -1,4 +1,4 @@
-import type { FetchRequest } from '@type/http'
+import type { FetchRequest } from '@type'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { AppRequestStatus } from '@core/config'
