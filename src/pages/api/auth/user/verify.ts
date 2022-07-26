@@ -1,9 +1,9 @@
 import type { VerifyUser } from '@store/auth/types'
 
+import { serialize } from '@core/app'
 import { Appkey, AppRoutes } from '@core/config'
 import { firebaseAdmin } from '@core/firebase/admin'
-import { withRequest } from '@server/request'
-import { serialize } from 'cookie'
+import { withRequest } from '@core/server'
 
 const userVerifyRequest = withRequest<VerifyUser>(
   async ({ request, response, throwError }) => {
@@ -15,13 +15,13 @@ const userVerifyRequest = withRequest<VerifyUser>(
 
       response.setHeader('Set-Cookie', [
         serialize(Appkey.AC_SSID_SECURE, token, {
-          path: AppRoutes.beranda,
           httpOnly: true,
           maxAge: 60 * 5,
+          path: AppRoutes.beranda,
         }),
         serialize(Appkey.AC_SSID_CLIENT, user.uid, {
-          path: AppRoutes.beranda,
           maxAge: 60 * 5,
+          path: AppRoutes.beranda,
         }),
       ])
 

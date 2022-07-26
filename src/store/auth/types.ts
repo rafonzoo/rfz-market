@@ -1,4 +1,4 @@
-import type { FetchRequest } from '@type/http'
+import type { FetchRequest } from '@type'
 import type { UserInfo } from 'firebase/auth'
 
 export interface AuthData {

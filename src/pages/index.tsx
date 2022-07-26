@@ -1,6 +1,6 @@
-import type { NextProtectedPage } from '@type/page'
+import type { NextProtectedPage } from '@type'
 
-import { Link } from '@core'
+import { Link } from '@core/app'
 import { AppRoutes } from '@core/config'
 import { Box } from '@mui/material'
 import { useAuthContext, useThemeContext } from '@tools/hook'
@@ -34,12 +34,12 @@ const Home: NextProtectedPage = ({ user }) => {
         </Link>
       </div>
       <div>
-        <Box sx={{ height: '1px', background: theme.palette.divider, my: 3 }}></Box>
+        <Box sx={{ background: theme.palette.divider, height: '1px', my: 3 }}></Box>
         <Button onClick={toggleColorMode}>{theme.palette.mode} mode</Button>
       </div>
     </div>
   )
 }
 
-export { ProtectedPage as getServerSideProps } from '@server/redirect'
+export { ProtectedPage as getServerSideProps } from '@core/server'
 export default Home

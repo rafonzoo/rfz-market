@@ -1,7 +1,7 @@
-import type { FetchRequest } from '@type/http'
+import type { FetchRequest } from '@type'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { axios } from '@core'
+import { axios } from '@core/app'
 import { AppRoutes } from '@core/config'
 
 export const devlog = (message: unknown, key?: keyof typeof colorType) => {
@@ -10,10 +10,10 @@ export const devlog = (message: unknown, key?: keyof typeof colorType) => {
   }
 
   const colorType = {
-    log: '#2563eb',
     error: '#dc2626',
-    warn: '#ca8a04',
+    log: '#2563eb',
     success: '#15803d',
+    warn: '#ca8a04',
   }
 
   const style = `

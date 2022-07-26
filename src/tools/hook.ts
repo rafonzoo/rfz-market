@@ -1,7 +1,6 @@
-import type { Dispatcher, RootStates, SelectorDispatch } from '@core/config/store'
+import type { Dispatcher, RootStates, SelectorDispatch } from '@core/app'
 
-import { AuthContext } from '@context/Auth'
-import { ColorModeContext } from '@context/Theme'
+import { AuthContext, ColorModeContext } from '@context'
 import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -18,5 +17,4 @@ export const useMounted = (callback: () => void) => {
 }
 
 export const useThemeContext = () => useContext(ColorModeContext)
-
 export const useAuthContext = () => useContext(AuthContext)

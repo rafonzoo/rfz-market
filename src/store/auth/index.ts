@@ -19,8 +19,8 @@ const setUserInfo = (state: AuthData, action: PayloadAction<UserInfo | null>) =>
 }
 
 const slice = createSlice({
-  name: 'auth',
   initialState: initialState,
+  name: 'auth',
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(unauthorizedTokenAction.fulfilled, setUserInfo)
