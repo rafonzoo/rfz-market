@@ -1,9 +1,8 @@
 import type { VerifyUser } from '@store/auth/types'
 
-import { serialize } from '@core/app'
-import { Appkey, AppRoutes } from '@core/config'
-import { firebaseAdmin } from '@core/firebase/admin'
-import { withRequest } from '@core/server'
+import { firebaseAdmin } from '@firebase/admin'
+import { withRequest } from '@server/request'
+import { cookies } from '@tools/helper'
 
 const userVerifyRequest = withRequest<VerifyUser>(
   async ({ request, response, throwError }) => {
@@ -12,17 +11,16 @@ const userVerifyRequest = withRequest<VerifyUser>(
 
     try {
       const user = await admin.auth().verifyIdToken(token)
+      const opt = (httpOnly: boolean) => ({
+        opt: {
+          httpOnly,
+          maxAge: 60 * 5,
+        },
+      })
 
       response.setHeader('Set-Cookie', [
-        serialize(Appkey.AC_SSID_SECURE, token, {
-          httpOnly: true,
-          maxAge: 60 * 5,
-          path: AppRoutes.beranda,
-        }),
-        serialize(Appkey.AC_SSID_CLIENT, user.uid, {
-          maxAge: 60 * 5,
-          path: AppRoutes.beranda,
-        }),
+        cookies.set('AC_SSID_SECURE', token, opt(true)),
+        cookies.set('AC_SSID_CLIENT', user.uid, opt(false)),
       ])
 
       return { isVerified: true }

@@ -1,4 +1,4 @@
-import type { Dispatcher, RootStates, SelectorDispatch } from '@core/app'
+import type { Dispatcher, RootStates, SelectorDispatch } from '@config/store'
 
 import { AuthContext, ColorModeContext } from '@context'
 import { useContext, useEffect, useState } from 'react'

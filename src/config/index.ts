@@ -1,3 +1,6 @@
+export * from '@config/store'
+export * from '@config/theme'
+
 export enum AppRoutes {
   beranda = '/',
   akun = '/akun',
@@ -11,9 +14,9 @@ export enum AppRoutesApi {
 }
 
 export enum Appkey {
-  AC_SSID_CLIENT = 'AC-SSID-CLIENT',
-  AC_SSID_SECURE = 'AC-SSID-SECURE',
-  AL_SSID_ONLOAD = 'AL-SSID-ONLOAD',
+  AC_SSID_CLIENT = 'AC_SSID_CLIENT',
+  AC_SSID_SECURE = 'AC_SSID_SECURE',
+  AL_SSID_ONLOAD = 'AL_SSID_ONLOAD',
 }
 
 export enum AppRequestStatus {

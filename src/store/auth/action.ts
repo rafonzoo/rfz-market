@@ -2,10 +2,10 @@ import type { VerifyUser } from '@store/auth/types'
 import type { UserInfo } from 'firebase-admin/lib/auth/user-record'
 import type { Auth, User } from 'firebase/auth'
 
-import { auth } from '@core/app'
-import { Appkey, AppRoutesApi } from '@core/config'
+import { AppRoutesApi } from '@config'
+import { auth } from '@firebase/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { devlog, dofetch } from '@tools/helper'
+import { devlog, dofetch, storage } from '@tools/helper'
 import { getRedirectResult } from 'firebase/auth'
 
 const setUserInfo = (user: User) => {
@@ -79,7 +79,7 @@ export const getRedirectResultAction = createAsyncThunk(
       devlog(error, 'error')
     }
 
-    localStorage.removeItem(Appkey.AL_SSID_ONLOAD)
+    storage.unset('AL_SSID_ONLOAD')
     location.reload()
 
     return account

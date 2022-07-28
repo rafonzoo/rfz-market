@@ -1,7 +1,7 @@
 import type { FetchRequest } from '@type'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { AppRequestStatus } from '@core/config'
+import { AppRequestStatus } from '@config'
 
 type CallbackFn<P = {}> = (args: CallbackProps) => Promise<P | void | undefined> | never
 

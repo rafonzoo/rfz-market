@@ -1,7 +1,7 @@
 import type { Theme } from '@mui/material/styles'
 import type { ReactNode } from 'react'
 
-import { getThemeOption, getThemePalette } from '@core/app'
+import { getThemeOption, getThemePalette } from '@config'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { createContext, useMemo, useState } from 'react'
 

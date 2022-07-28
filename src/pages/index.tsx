@@ -1,8 +1,8 @@
 import type { NextProtectedPage } from '@type'
 
-import { Link } from '@core/app'
-import { AppRoutes } from '@core/config'
+import { AppRoutes } from '@config'
 import { Box } from '@mui/material'
+import { Anchor } from '@tools/helper'
 import { useAuthContext, useThemeContext } from '@tools/hook'
 
 import Button from '@components/Button'
@@ -16,7 +16,7 @@ const Home: NextProtectedPage = ({ user }) => {
       <div>
         Halo {user.email}!
         <p>
-          <Link href={AppRoutes.masuk}>Masuk</Link>
+          <Anchor href={AppRoutes.masuk}>Masuk</Anchor>
         </p>
         <p>
           <button onClick={logout}>Logout</button>
@@ -29,9 +29,9 @@ const Home: NextProtectedPage = ({ user }) => {
     <div>
       You`re not logged in
       <div style={{ margin: '0 10px' }}>
-        <Link href={AppRoutes.masuk}>
+        <Anchor href={AppRoutes.masuk}>
           <Button>Masuk</Button>
-        </Link>
+        </Anchor>
       </div>
       <div>
         <Box sx={{ background: theme.palette.divider, height: '1px', my: 3 }}></Box>
@@ -41,5 +41,5 @@ const Home: NextProtectedPage = ({ user }) => {
   )
 }
 
-export { ProtectedPage as getServerSideProps } from '@core/server'
+export { ProtectedPage as getServerSideProps } from '@server/redirect'
 export default Home

@@ -5,8 +5,8 @@ import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
 import '@fontsource/inter/700.css'
 
+import { store } from '@config'
 import { AuthContextProvider } from '@context'
-import { store } from '@core/app'
 import { Provider } from 'react-redux'
 
 function MyApp({ Component, pageProps }: AppProps) {

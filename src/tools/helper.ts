@@ -1,8 +1,18 @@
 import type { FetchRequest } from '@type'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { axios } from '@core/app'
-import { AppRoutes } from '@core/config'
+import { AppRoutes } from '@config'
+import { default as AppCookies } from '@lib/cookies'
+import { default as AppStorage } from '@lib/storage'
+import { default as Axios } from 'axios'
+import { default as NextLink } from 'next/link'
+
+export const axios = Axios
+export const Anchor = NextLink
+
+export const storage = new AppStorage('localStorage')
+export const session = new AppStorage('sessionStorage')
+export const cookies = new AppCookies()
 
 export const devlog = (message: unknown, key?: keyof typeof colorType) => {
   if (typeof window === 'undefined') {

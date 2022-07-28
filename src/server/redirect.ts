@@ -1,10 +1,9 @@
 import type { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier'
 import type { GetServerSideProps } from 'next'
 
-import { serialize } from '@core/app'
-import { Appkey, AppRoutes } from '@core/config'
-import { firebaseAdmin } from '@core/firebase/admin'
-import { isProtectedPage } from '@tools/helper'
+import { Appkey, AppRoutes } from '@config'
+import { firebaseAdmin } from '@firebase/admin'
+import { cookies, isProtectedPage } from '@tools/helper'
 
 export const ProtectedPage: GetServerSideProps = async (ctx) => {
   const admin = firebaseAdmin()
@@ -28,8 +27,8 @@ export const ProtectedPage: GetServerSideProps = async (ctx) => {
       // redirect them to signin page and remove the broken token.
       redirect = protectedRoute ? { destination: AppRoutes.masuk } : false
       ctx.res.setHeader('Set-Cookie', [
-        serialize(Appkey.AC_SSID_CLIENT, '', { maxAge: 0, path: AppRoutes.beranda }),
-        serialize(Appkey.AC_SSID_SECURE, '', { maxAge: 0, path: AppRoutes.beranda }),
+        cookies.unset('AC_SSID_CLIENT'),
+        cookies.unset('AC_SSID_SECURE'),
       ])
     }
 
