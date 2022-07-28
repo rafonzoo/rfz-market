@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 import { ColorModeProvider } from '@context'
 import { auth } from '@firebase/client'
-import { GlobalStyles } from '@mui/material'
 import {
   signoutAuthUserAction,
   unauthorizedTokenAction,
@@ -58,32 +57,7 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ logout, signInWithProvider }}>
-      <ColorModeProvider>
-        <GlobalStyles
-          styles={(theme) => ({
-            body: {
-              fontSize: theme.typography.body1.fontSize,
-              fontWeight: theme.typography.body1.fontWeight,
-              lineHeight: theme.typography.body1.lineHeight,
-              letterSpacing: theme.typography.body1.letterSpacing,
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.text.primary,
-              fontFamily: theme.typography.fontFamily,
-              margin: '0',
-              padding: '0',
-            },
-            html: {
-              MozOsxFontSmoothing: 'grayscale',
-              WebkitFontSmoothing: 'antialiased',
-              direction: 'ltr',
-              fontFeatureSettings: '"kern"',
-              fontSynthesis: 'none',
-              textAlign: 'left',
-            },
-          })}
-        />
-        {children}
-      </ColorModeProvider>
+      <ColorModeProvider>{children}</ColorModeProvider>
     </AuthContext.Provider>
   )
 }

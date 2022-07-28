@@ -5,6 +5,12 @@ const Document = () => {
     <Html lang='en'>
       <Head />
       <body>
+        {/* prettier-ignore */}
+        <script>
+          document.documentElement.classList.add(
+            localStorage.getItem({'`AL_STATE_THEME`'}) || {'`light`'}
+          )
+        </script>
         <Main />
         <NextScript />
       </body>

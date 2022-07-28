@@ -17,6 +17,12 @@ export enum Appkey {
   AC_SSID_CLIENT = 'AC_SSID_CLIENT',
   AC_SSID_SECURE = 'AC_SSID_SECURE',
   AL_SSID_ONLOAD = 'AL_SSID_ONLOAD',
+  AL_STATE_THEME = 'AL_STATE_THEME',
+}
+
+export enum AppCSSVar {
+  colorBg = 'color-bg',
+  colorText = 'color-text',
 }
 
 export enum AppRequestStatus {

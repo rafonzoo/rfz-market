@@ -1,7 +1,7 @@
 import type { FetchRequest } from '@type'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { AppRoutes } from '@config'
+import { AppCSSVar, AppRoutes } from '@config'
 import { default as AppCookies } from '@lib/cookies'
 import { default as AppStorage } from '@lib/storage'
 import { default as Axios } from 'axios'
@@ -51,4 +51,18 @@ export const dofetch = async <P extends FetchRequest>(
 export const isProtectedPage = (string: string) => {
   const protectedRoutes = [AppRoutes.masuk, AppRoutes.daftar]
   return protectedRoutes.includes(string as AppRoutes)
+}
+
+export const cssvar = (vars: keyof typeof AppCSSVar) => {
+  return `var(--${AppCSSVar[vars]})`
+}
+
+export const cssVarRoot = (arr: [keyof typeof AppCSSVar, string][]) => {
+  const root = Object.create({})
+
+  for (let i = 0; i < arr.length; i++) {
+    root[`--${AppCSSVar[arr[i][0]]}`] = arr[i][1]
+  }
+
+  return root
 }
