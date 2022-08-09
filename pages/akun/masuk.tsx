@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 
-import { auth } from '@core/app'
-import { Appkey } from '@core/config'
+import { auth } from '@firebase/client'
 import { getRedirectResultAction } from '@store/auth/action'
+import { storage } from '@tools/helper'
 import { useAuthContext, useMounted, useRedux } from '@tools/hook'
 import { GoogleAuthProvider } from 'firebase/auth'
 
@@ -11,7 +11,7 @@ const Masuk: NextPage = () => {
   const [, dispatch] = useRedux((state) => state)
 
   useMounted(() => {
-    if (localStorage.getItem(Appkey.AL_SSID_ONLOAD)) {
+    if (storage.get('AL_SSID_ONLOAD')) {
       dispatch(getRedirectResultAction(auth))
     }
   })
@@ -23,5 +23,5 @@ const Masuk: NextPage = () => {
   )
 }
 
-export { ProtectedPage as getServerSideProps } from '@core/server'
+export { ProtectedPage as getServerSideProps } from '@server/redirect'
 export default Masuk

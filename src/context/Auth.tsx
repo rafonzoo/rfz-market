@@ -2,17 +2,16 @@ import type { AuthProvider } from 'firebase/auth'
 import type { ReactNode } from 'react'
 
 import { ColorModeProvider } from '@context'
-import { auth, parse, router } from '@core/app'
-import { Appkey } from '@core/config'
-import { GlobalStyles } from '@mui/material'
+import { auth } from '@firebase/client'
 import {
   signoutAuthUserAction,
   unauthorizedTokenAction,
   verifyUserTokenAction,
 } from '@store/auth/action'
-import { isProtectedPage } from '@tools/helper'
+import { cookies, isProtectedPage, storage } from '@tools/helper'
 import { useRedux } from '@tools/hook'
 import { onIdTokenChanged, signInWithRedirect } from 'firebase/auth'
+import { useRouter } from 'next/router'
 import { createContext, useEffect, useState } from 'react'
 
 export const AuthContext = createContext<{
@@ -24,8 +23,9 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
   const [{ user }, dispatch] = useRedux((state) => state.auth)
   const [mounted, isMounted] = useState(false)
 
+  const router = useRouter()
   const signInWithProvider = async (provider: AuthProvider) => {
-    localStorage.setItem(Appkey.AL_SSID_ONLOAD, 'true')
+    storage.set('AL_SSID_ONLOAD', true + '')
     await signInWithRedirect(auth, provider)
   }
 
@@ -37,8 +37,8 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
   useEffect(() => {
     // prettier-ignore
     mounted && onIdTokenChanged(auth, async (user) => {
-      const isStateLoggingIn = localStorage.getItem(Appkey.AL_SSID_ONLOAD)
-      const clientUserCookie = parse(document.cookie)[Appkey.AC_SSID_CLIENT]
+      const isStateLoggingIn = storage.get('AL_SSID_ONLOAD')
+      const clientUserCookie = cookies.get('AC_SSID_CLIENT', { client: true })
 
       if (clientUserCookie && !isStateLoggingIn) {
         user
@@ -49,40 +49,14 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
   }, [dispatch, mounted])
 
   useEffect(() => {
-    const isStateLoggingIn = localStorage.getItem(Appkey.AL_SSID_ONLOAD)
     if (user && isProtectedPage(router.asPath)) {
-      !isStateLoggingIn && router.replace('/')
+      !storage.get('AL_SSID_ONLOAD') && router.replace('/')
     }
-  }, [user])
+  }, [router, user])
 
   return (
     <AuthContext.Provider value={{ logout, signInWithProvider }}>
-      <ColorModeProvider>
-        <GlobalStyles
-          styles={(theme) => ({
-            body: {
-              fontSize: theme.typography.body1.fontSize,
-              fontWeight: theme.typography.body1.fontWeight,
-              lineHeight: theme.typography.body1.lineHeight,
-              letterSpacing: theme.typography.body1.letterSpacing,
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.text.primary,
-              fontFamily: theme.typography.fontFamily,
-              margin: '0',
-              padding: '0',
-            },
-            html: {
-              MozOsxFontSmoothing: 'grayscale',
-              WebkitFontSmoothing: 'antialiased',
-              direction: 'ltr',
-              fontFeatureSettings: '"kern"',
-              fontSynthesis: 'none',
-              textAlign: 'left',
-            },
-          })}
-        />
-        {children}
-      </ColorModeProvider>
+      <ColorModeProvider>{children}</ColorModeProvider>
     </AuthContext.Provider>
   )
 }

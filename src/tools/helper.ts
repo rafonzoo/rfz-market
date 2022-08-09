@@ -1,8 +1,19 @@
+import type { MetaInterface } from '@store/meta/type'
 import type { FetchRequest } from '@type'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { axios } from '@core/app'
-import { AppRoutes } from '@core/config'
+import { AppCSSVar, AppRoutes } from '@config'
+import { default as AppCookies } from '@lib/cookies'
+import { default as AppStorage } from '@lib/storage'
+import { default as Axios } from 'axios'
+import { default as NextLink } from 'next/link'
+
+export const axios = Axios
+export const Anchor = NextLink
+
+export const storage = new AppStorage('localStorage')
+export const session = new AppStorage('sessionStorage')
+export const cookies = new AppCookies()
 
 export const devlog = (message: unknown, key?: keyof typeof colorType) => {
   if (typeof window === 'undefined') {
@@ -42,3 +53,21 @@ export const isProtectedPage = (string: string) => {
   const protectedRoutes = [AppRoutes.masuk, AppRoutes.daftar]
   return protectedRoutes.includes(string as AppRoutes)
 }
+
+export const cssvar = (vars: keyof typeof AppCSSVar) => {
+  return `var(--${AppCSSVar[vars]})`
+}
+
+export const cssVarRoot = (arr: [keyof typeof AppCSSVar, string][]) => {
+  const root = Object.create({})
+
+  for (let i = 0; i < arr.length; i++) {
+    root[`--${AppCSSVar[arr[i][0]]}`] = arr[i][1]
+  }
+
+  return root
+}
+
+export const metaRequestPending = (state: MetaInterface) => void (state._meta = 'pending')
+export const metaRequestFailure = (state: MetaInterface) => void (state._meta = 'failure')
+export const metaRequestSuccess = (state: MetaInterface) => void (state._meta = 'success')

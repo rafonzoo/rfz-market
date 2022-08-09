@@ -40,7 +40,7 @@
             "position": "after"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["external"],
+        "pathGroupsExcludedImportTypes": ["external", "type"],
         "warnOnUnassignedImports": false,
         "alphabetize": {
           "order": "asc"
