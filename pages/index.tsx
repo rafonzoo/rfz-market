@@ -1,15 +1,14 @@
 import type { NextProtectedPage } from '@type'
 
 import { AppRoutes } from '@config'
-import { Box } from '@mui/material'
 import { Anchor } from '@tools/helper'
-import { useAuthContext, useThemeContext } from '@tools/hook'
+import { useAuthContext, useCommon } from '@tools/hook'
 
 import Button from '@components/Button'
 
 const Home: NextProtectedPage = ({ user }) => {
   const { logout } = useAuthContext()
-  const { theme, toggleColorMode } = useThemeContext()
+  const { t } = useCommon()
 
   if (user) {
     return (
@@ -27,16 +26,11 @@ const Home: NextProtectedPage = ({ user }) => {
 
   return (
     <div>
-      You`re not logged in
-      <div style={{ margin: '0 10px' }}>
-        <Anchor href={AppRoutes.masuk}>
-          <Button>Masuk</Button>
-        </Anchor>
-      </div>
-      <div>
-        <Box sx={{ background: theme.palette.divider, height: '1px', my: 3 }}></Box>
-        <Button onClick={toggleColorMode}>{theme.palette.mode} mode</Button>
-      </div>
+      {/* <div>You`re not logged in</div> */}
+      <div>{t('auth.notLogin')}</div>
+      <Anchor href={AppRoutes.masuk}>
+        <Button>Masuk</Button>
+      </Anchor>
     </div>
   )
 }

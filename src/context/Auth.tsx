@@ -24,7 +24,6 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
   const [mounted, isMounted] = useState(false)
 
   const router = useRouter()
-
   const signInWithProvider = async (provider: AuthProvider) => {
     storage.set('AL_SSID_ONLOAD', true + '')
     await signInWithRedirect(auth, provider)

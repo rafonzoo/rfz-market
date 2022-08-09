@@ -1,0 +1,6 @@
+{
+  "common": {},
+  "auth": {
+    "notLogin": "Kamu belum masuk"
+  }
+}

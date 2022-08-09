@@ -1,3 +1,4 @@
+import type { MetaInterface } from '@store/meta/type'
 import type { FetchRequest } from '@type'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
@@ -66,3 +67,7 @@ export const cssVarRoot = (arr: [keyof typeof AppCSSVar, string][]) => {
 
   return root
 }
+
+export const metaRequestPending = (state: MetaInterface) => void (state._meta = 'pending')
+export const metaRequestFailure = (state: MetaInterface) => void (state._meta = 'failure')
+export const metaRequestSuccess = (state: MetaInterface) => void (state._meta = 'success')

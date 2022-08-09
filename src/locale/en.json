@@ -1,0 +1,6 @@
+{
+  "common": {},
+  "auth": {
+    "notLogin": "You`re not logged in"
+  }
+}

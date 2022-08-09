@@ -9,7 +9,7 @@ export const theme = createTheme({
     primary: {
       main: '#2563EB',
     },
-    divider: 'rgb(136 136 136 / 30%)',
+    divider: 'rgb(170 170 170 / 35%)',
   },
   typography: {
     htmlFontSize: 16,
@@ -57,11 +57,11 @@ export const theme = createTheme({
 
 export function getRootVariable(theme: Theme) {
   return {
-    ':root:not(.dark)': cssVarRoot([
+    '.dark': cssVarRoot([
       ['colorBg', theme.palette.common.white],
       ['colorText', grey['900']],
     ]),
-    ':root:not(.light)': cssVarRoot([
+    '.light': cssVarRoot([
       ['colorBg', theme.palette.common.black],
       ['colorText', grey['100']],
     ]),
@@ -70,6 +70,9 @@ export function getRootVariable(theme: Theme) {
 
 export function getCSSBaseline(theme: Theme): { [x: string]: Interpolation<Theme> } {
   return {
+    '.light, .dark': {
+      transition: 'all 150ms ease',
+    },
     html: {
       MozOsxFontSmoothing: 'grayscale',
       WebkitFontSmoothing: 'antialiased',
